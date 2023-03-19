@@ -1,12 +1,11 @@
 const express = require("express");
-const app = express();
+const bookRouter = require("./routes/book");
 require("./database/connection");
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
+const app = express();
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+
+app.use(express.json());
+app.use(bookRouter);
+
+module.exports = app;
