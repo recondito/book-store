@@ -12,4 +12,17 @@ router.get("/books", async (req, res) => {
   }
 });
 
+// GET Book by ID
+router.get("/books/:id", async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      throw new Error();
+    }
+    res.send(book);
+  } catch (e) {
+    res.status(404).send(e);
+  }
+});
+
 module.exports = router;
