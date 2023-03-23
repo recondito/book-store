@@ -14,4 +14,18 @@ router.post("/user", async (req, res) => {
   }
 });
 
+// POST Login User.
+router.post("/user/login", async (req, res) => {
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    const token = await user.generateAuthToken();
+    res.send({ user, token });
+  } catch (e) {
+    res.status(400).send();
+  }
+});
+
 module.exports = router;
