@@ -20,6 +20,11 @@ const bookSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  userFav: {
+    type: [mongoose.Schema.Types.ObjectId],
+    required: true,
+    ref: "User",
+  },
 });
 
 const Book = mongoose.model("Book", bookSchema);

@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema(
 userSchema.virtual("books", {
   ref: "Book",
   localField: "_id",
-  foreignField: "favorite",
+  foreignField: "userFav",
 });
 
 // Hash Plain Text password before Saving.
