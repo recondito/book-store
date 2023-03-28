@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Book = require("./book");
 
 const userSchema = new mongoose.Schema(
   {
@@ -52,17 +51,16 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: Buffer,
     },
+    favoriteBooks: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: true,
+      ref: "Book",
+    },
   },
   {
     timestamps: true,
   }
 );
-
-userSchema.virtual("books", {
-  ref: "Book",
-  localField: "_id",
-  foreignField: "userFav",
-});
 
 // Hash Plain Text password before Saving.
 userSchema.pre("save", async function (next) {
