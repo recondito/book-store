@@ -25,4 +25,17 @@ router.get("/books/:id", async (req, res) => {
   }
 });
 
+// GET Book Page
+router.get("/books/:id/:page", async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      throw new Error();
+    }
+    res.send(book.content[req.params.page]);
+  } catch (e) {
+    res.status(404).send(e);
+  }
+});
+
 module.exports = router;
