@@ -51,11 +51,6 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: Buffer,
     },
-    favoriteBooks: {
-      type: [mongoose.Schema.Types.ObjectId],
-      required: true,
-      ref: "Book",
-    },
   },
   {
     timestamps: true,

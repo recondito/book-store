@@ -22,12 +22,6 @@ const bookSchema = new mongoose.Schema({
   },
 });
 
-bookSchema.virtual("users", {
-  ref: "User",
-  localField: "_id",
-  foreignField: "favoriteBooks",
-});
-
 const Book = mongoose.model("Book", bookSchema);
 
 module.exports = Book;
