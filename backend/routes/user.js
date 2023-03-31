@@ -60,7 +60,7 @@ const upload = multer({
 });
 
 router.post(
-  "/user/me/avatar",
+  "/user/avatar",
   auth,
   upload.single("avatar"),
   async (req, res) => {
@@ -76,5 +76,10 @@ router.post(
     res.status(400).send({ error: error.message });
   }
 );
+
+// GET User Profile.
+router.get("/user", auth, async (req, res) => {
+  res.send(req.user);
+});
 
 module.exports = router;
