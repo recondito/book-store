@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const sharp = require("sharp");
 const User = require("../model/user");
 const auth = require("../middleware/auth");
 const router = new express.Router();
@@ -42,5 +44,37 @@ router.post("/user/logout", auth, async (req, res) => {
     res.status(500).send();
   }
 });
+
+// POST Upload Profile Picture.
+const upload = multer({
+  limits: {
+    fileSize: 2097152, //2MB
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
+      return cb(new Error("Please upload an image file (.png, .jpg, .jpeg)"));
+    }
+
+    cb(undefined, true);
+  },
+});
+
+router.post(
+  "/user/me/avatar",
+  auth,
+  upload.single("avatar"),
+  async (req, res) => {
+    const buffer = await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toBuffer();
+    req.user.avatar = buffer;
+    await req.user.save();
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+);
 
 module.exports = router;
