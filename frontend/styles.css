@@ -1,0 +1,12 @@
+.loginContainer {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
